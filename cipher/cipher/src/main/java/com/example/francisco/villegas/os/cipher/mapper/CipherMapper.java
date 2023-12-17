@@ -1,17 +1,20 @@
 package com.example.francisco.villegas.os.cipher.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.openapitools.model.AesOtk;
 import org.openapitools.model.TextOut;
 
-@Mapper
-public interface CipherMapper {
+public class CipherMapper {
 
-    @Mapping(target = "otk", source = "source")
-    AesOtk generateAesOtk(String source);
+    public static AesOtk generateAesOtk(String otk) {
+        var aesOtk = new AesOtk();
+        aesOtk.setOtk(otk);
+        return aesOtk;
+    }
 
-    @Mapping(target = "text", source = "source")
-    TextOut generateTextOut(String source);
+    public static TextOut generateTextOut(String text) {
+        var textOut = new TextOut();
+        textOut.setText(text);
+        return textOut;
+    }
 
 }
