@@ -2,6 +2,7 @@ package com.example.francisco.villegas.os.cipher.service;
 
 import com.example.francisco.villegas.os.cipher.exception.CipherException;
 import com.example.francisco.villegas.os.cipher.mapper.CipherMapper;
+import org.openapitools.model.AesOtk;
 import org.openapitools.model.TextIn;
 import org.openapitools.model.TextOut;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,15 @@ public class AESCipherService {
 
     public AESCipherService(CipherMapper mapper) {
         this.mapper = mapper;
+    }
+
+    public AesOtk generateOtk() throws CipherException {
+        try {
+            //TODO
+            return mapper.generateAesOtk(null);
+        } catch (Exception e) {
+            throw CipherException.of(e);
+        }
     }
 
     public TextOut cipher(TextIn textIn) throws CipherException {
