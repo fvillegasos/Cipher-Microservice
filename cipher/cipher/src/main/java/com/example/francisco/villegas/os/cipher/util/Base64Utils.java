@@ -4,8 +4,13 @@ import java.util.Base64;
 
 public class Base64Utils {
 
-    public static String FromBytesToEncodedString(byte[] bytes) {
-        return Base64.getEncoder().encodeToString(bytes);
+    public static String fromBytesToEncodedString(byte[] bytes) {
+        return Base64.getEncoder().withoutPadding().encodeToString(bytes);
+    }
+
+    public static byte[] fromStringToDecodedBytes(String string) {
+        var bytes = string.getBytes();
+        return Base64.getDecoder().decode(bytes);
     }
 
 }
