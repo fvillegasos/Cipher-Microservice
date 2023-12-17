@@ -1,0 +1,90 @@
+openapi: 3.0.3
+info:
+  title: Cipher-Micro
+  description: |-
+    This is a simple Cipher Application that will be useful for understanding the basics of AES-GCM encryption.
+    
+    Some useful links:
+    - [The Cipher-Micro repository](https://github.com/fvillegasos/cipher)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: francisco.villegasostos@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+tags:
+  - name: aes
+    description: API for cipher/decipher using the AES-GCM algorithm
+    externalDocs:
+      description: Find out more
+      url: https://iopscience.iop.org/article/10.1088/1742-6596/1019/1/012008/pdf#:~:text=AES%2DGCM%20have%20two%20main,ciphertext%20and%20authentication%20tag%2CT.
+paths:
+  /aes/cipher:
+    post:
+      tags:
+        - aes
+      summary: Cipher a text with AES algorithm
+      description: This endpoint will cipher a text using the AES-GCM algorithm
+      operationId: getCipheredTextAes
+      requestBody:
+        description: Text input that will be ciphered
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextIn'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextOut'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /aes/decipher:
+    post:
+      tags:
+        - aes
+      summary: Decipher a text with AES algorithm
+      description: This endpoint will decipher a text using the AES-GCM algorithm
+      operationId: getDecipheredTextAes
+      requestBody:
+        description: Text input that will be deciphered
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextIn'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextOut'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    TextIn:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Text to cipher/decipher
+          example: Hello World!/W9Jhfaxz==
+      required:
+        - text
+    TextOut:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Text to cipher/decipher
+          example: Hello World!/W9Jhfaxz==
+      required:
+        - text
