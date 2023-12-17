@@ -92,9 +92,9 @@ components:
         otk:
           type: string
           description: One-time Key randonly generated for the cipher/decipher methods of AES algorithm.
-          minLength: 16
-          maxLength: 16
-          example: sy97gIKWLeGtijdA
+          minLength: 32
+          maxLength: 32
+          example: GV06yH57BDA9kDdBnuJL1Rfjv1cuz+ZJ
       required:
         - otk
     TextIn:
@@ -102,10 +102,10 @@ components:
       properties:
         otk:
           type: string
-          description: One-time Key used for the cipher/decipher the text. This key should have a length of 16, and should be generated randonly every time.
-          minLength: 16
-          maxLength: 16
-          example: sy97gIKWLeGtijdA
+          description: One-time Key used for the cipher/decipher the text. This key should have a length of 32 bytes, and should be generated randonly every time.
+          minLength: 32
+          maxLength: 32
+          example: GV06yH57BDA9kDdBnuJL1Rfjv1cuz+ZJ
         text:
           type: string
           description: Text to cipher/decipher
