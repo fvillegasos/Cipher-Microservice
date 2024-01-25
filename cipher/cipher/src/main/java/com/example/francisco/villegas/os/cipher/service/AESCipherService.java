@@ -19,10 +19,10 @@ public class AESCipherService {
 
     public AesOtk generateOtk() throws CipherException {
         try {
-            var keyGenerator = KeyGenerator.getInstance(CipherConstants.AES);
+            var keyGenerator = KeyGenerator.getInstance(CipherConstants.AES_INSTANCE);
             keyGenerator.init(CipherConstants.AES_KEY_LENGTH);
             var key = keyGenerator.generateKey();
-            var otk = Base64Utils.fromBytesToEncodedString(key.getEncoded());
+            var otk = Base64Utils.encodeAndGenerateString(key.getEncoded());
             return CipherMapper.generateAesOtk(otk);
         } catch (Exception e) {
             throw CipherException.of(e);
@@ -33,16 +33,16 @@ public class AESCipherService {
         try {
             var input = textIn.getText().getBytes();
 
-            var cipher = CipherUtils.generateCipherByAlgorithm(CipherConstants.AES_GCM);
+            var cipher = CipherUtils.generateCipherByAlgorithm(CipherConstants.AES_ALGORITHM);
             var key = CipherUtils.generateAesKey(textIn.getOtk());
             var iv = CipherUtils.generateRandomIv();
 
             cipher.init(Cipher.ENCRYPT_MODE, key, iv);
             byte[] cipheredText = cipher.doFinal(input);
 
-            var encodedCipheredText = Base64Utils.fromBytesToEncodedString(cipheredText);
+            var encodedCipheredText = Base64Utils.encodeAndGenerateString(cipheredText);
             CipherLog.print(encodedCipheredText);
-            var encodedIv = Base64Utils.fromBytesToEncodedString(iv.getIV());
+            var encodedIv = Base64Utils.encodeAndGenerateString(iv.getIV());
             CipherLog.print(encodedIv);
             var output = encodedIv.concat(encodedCipheredText);
             CipherLog.print(output);
@@ -56,22 +56,22 @@ public class AESCipherService {
     public TextOut decipher(TextIn textIn) throws CipherException {
         try {
             var input = textIn.getText();
-            var encodedIv = input.substring(0, CipherConstants.IV_LENGTH);
+            var encodedIv = input.substring(0, CipherConstants.IV_COUNTER_LENGTH);
             CipherLog.print(encodedIv);
-            var encodedCipheredText = input.substring(CipherConstants.IV_LENGTH);
+            var encodedCipheredText = input.substring(CipherConstants.IV_COUNTER_LENGTH);
             CipherLog.print(encodedCipheredText);
 
-            var decodedIv = Base64Utils.fromStringToDecodedBytes(encodedIv);
-            var cipheredText = Base64Utils.fromStringToDecodedBytes(encodedCipheredText);
+            var decodedIv = Base64Utils.decodeAndGenerateBytes(encodedIv);
+            var cipheredText = Base64Utils.decodeAndGenerateBytes(encodedCipheredText);
 
-            var cipher = CipherUtils.generateCipherByAlgorithm(CipherConstants.AES_GCM);
+            var cipher = CipherUtils.generateCipherByAlgorithm(CipherConstants.AES_ALGORITHM);
             var key = CipherUtils.generateAesKey(textIn.getOtk());
             var iv = CipherUtils.generateIv(decodedIv);
 
             cipher.init(Cipher.DECRYPT_MODE, key, iv);
             byte[] decipheredText = cipher.doFinal(cipheredText);
 
-            var encodedDecipheredText = Base64Utils.fromBytesToEncodedString(decipheredText);
+            var encodedDecipheredText = Base64Utils.fromBytesToString(decipheredText);
             CipherLog.print(encodedDecipheredText);
 
             return CipherMapper.generateTextOut(encodedDecipheredText);

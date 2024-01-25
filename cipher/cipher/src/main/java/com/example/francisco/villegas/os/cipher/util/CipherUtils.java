@@ -5,7 +5,6 @@ import com.example.francisco.villegas.os.cipher.constant.CipherConstants;
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -17,17 +16,17 @@ public class CipherUtils {
     }
 
     public static SecretKeySpec generateAesKey(String keyStr) {
-        return new SecretKeySpec(keyStr.getBytes(), CipherConstants.AES);
+        return new SecretKeySpec(keyStr.getBytes(), CipherConstants.AES_INSTANCE);
     }
 
     public static GCMParameterSpec generateRandomIv() {
-        byte[] iv = new byte[CipherConstants.IV_LENGTH];
+        byte[] iv = new byte[CipherConstants.IV];
         new SecureRandom().nextBytes(iv);
         return generateIv(iv);
     }
 
     public static GCMParameterSpec generateIv(byte[] iv) {
-        return new GCMParameterSpec(CipherConstants.T_LENGTH, iv);
+        return new GCMParameterSpec(CipherConstants.TAG_LENGTH, iv);
     }
 
 }
