@@ -74,7 +74,7 @@
 						</goals>
 						<configuration>
 							<skipValidateSpec>true</skipValidateSpec>
-							<inputSpec>./src/main/resources/cipher_api_description.yaml</inputSpec>
+							<inputSpec>contract/cipher_contract.yaml</inputSpec>
 							<generatorName>spring</generatorName>
 							<configOptions>
 								<openApiNullable>false</openApiNullable>
